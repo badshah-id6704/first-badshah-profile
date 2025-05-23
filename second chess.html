@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Colorful Chessboard</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(135deg, #f0f8ff, #ffe4e1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-shadow: 1px 1px 2px #aaa;
+      margin-bottom: 20px;
+    }
+
+    .chessboard {
+      display: grid;
+      grid-template-columns: repeat(8, 60px);
+      grid-template-rows: repeat(8, 60px);
+      border: 5px solid #8b4513;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    .square {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .light {
+      background: linear-gradient(45deg, #ffdab9, #ffe4c4);
+    }
+
+    .dark {
+      background: linear-gradient(45deg, #8b0000, #a0522d);
+    }
+
+    .chessboard .square:nth-child(even) {
+      color: #fff;
+    }
+
+    .chessboard .square:nth-child(odd) {
+      color: #000;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .buttons button {
+      background: linear-gradient(145deg, #6a5acd, #836fff);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+      transition: 0.3s ease;
+    }
+
+    .buttons button:hover {
+      background: linear-gradient(145deg, #836fff, #6a5acd);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>Colorful Chessboard</h1>
+
+  <div class="chessboard" id="chessboard">
+    <!-- 64 squares -->
+    <script>
+      const board = document.getElementById("chessboard");
+      for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+          const square = document.createElement("div");
+          square.className = "square " + ((row + col) % 2 === 0 ? "light" : "dark");
+          board.appendChild(square);
+        }
+      }
+    </script>
+  </div>
+
+  <div class="buttons">
+    <button>Reset</button>
+    <button>Flip Board</button>
+    <button>Start Game</button>
+    <button>Help</button>
+  </div>
+</body>
+</html>

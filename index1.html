@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>3D Bike Game Demo</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: #000; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <!-- Include Three.js -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
+  <script>
+    // Scene setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Add simple ground
+    const groundGeometry = new THREE.PlaneGeometry(500, 500, 10, 10);
+    const groundMaterial = new THREE.MeshBasicMaterial({ color: 0x555555, wireframe: true });
+    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotation.x = -Math.PI / 2;
+    scene.add(ground);
+
+    // Bike (represented as a cube)
+    const bikeGeometry = new THREE.BoxGeometry(1, 0.5, 2);
+    const bikeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    const bike = new THREE.Mesh(bikeGeometry, bikeMaterial);
+    scene.add(bike);
+
+    camera.position.set(0, 3, 5);
+    camera.lookAt(bike.position);
+
+    // Controls
+    let direction = 0; // left/right control
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "ArrowLeft") direction = 0.05;
+      if (e.key === "ArrowRight") direction = -0.05;
+    });
+
+    document.addEventListener('keyup', (e) => {
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") direction = 0;
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Move forward
+      bike.position.z -= 0.1;
+
+      // Turn left/right
+      bike.rotation.y += direction;
+      bike.position.x += Math.sin(bike.rotation.y) * 0.1;
+
+      // Move camera with the bike
+      camera.position.x = bike.position.x;
+      camera.position.z = bike.position.z + 5;
+      camera.lookAt(bike.position);
+
+      renderer.render(scene, camera);
+    }
+
+    a
